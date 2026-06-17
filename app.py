@@ -295,7 +295,7 @@ def simular():
                 fecha=fecha
             )
         )
-       enviar_telegram(
+        enviar_telegram(
             f"⚠ ALERTA\nHumedad Alta\n{humedad}%\n{fecha}"
         )
 
@@ -307,7 +307,7 @@ def simular():
                 fecha=fecha
             )
         )
-       enviar_telegram(
+        enviar_telegram(
             f"⚠ ALERTA\nHumedad Baja\n{humedad}%\n{fecha}"
         )
 
