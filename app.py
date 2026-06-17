@@ -378,7 +378,9 @@ def reporte():
     """
 
 with app.app_context():
+    print("CREANDO TABLAS...")
     db.create_all()
+    print("TABLAS CREADAS")
 
 if __name__ == "__main__":
     app.run(debug=True)
