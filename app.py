@@ -194,6 +194,9 @@ def recibir_datos():
                 fecha=fecha
             )
         )
+        enviar_telegram(
+            f"⚠ ALERTA\nTemperatura Alta\n{temperatura} °C\n{fecha}"
+        )
 
     if temperatura < 5:
 
@@ -202,6 +205,9 @@ def recibir_datos():
                 tipo="Temperatura Baja",
                 fecha=fecha
             )
+        )
+        enviar_telegram(
+            f"⚠ ALERTA\nTemperatura Baja\n{temperatura} °C\n{fecha}"
         )
 
     if humedad > 85:
@@ -212,6 +218,9 @@ def recibir_datos():
                 fecha=fecha
             )
         )
+        enviar_telegram(
+            f"⚠ ALERTA\nHumedad Alta\n{humedad}%\n{fecha}"
+        )
 
     if humedad < 60:
 
@@ -220,6 +229,9 @@ def recibir_datos():
                 tipo="Humedad Baja",
                 fecha=fecha
             )
+        )
+        enviar_telegram(
+            f"⚠ ALERTA\nHumedad Baja\n{humedad}%\n{fecha}"
         )
 
     db.session.commit()
@@ -259,6 +271,9 @@ def simular():
                 fecha=fecha
             )
         )
+        enviar_telegram(
+            f"⚠ ALERTA\nTemperatura Alta\n{temperatura} °C\n{fecha}"
+        )
 
     if temperatura < 5:
 
@@ -267,6 +282,9 @@ def simular():
                 tipo="Temperatura Baja",
                 fecha=fecha
             )
+        )
+        enviar_telegram(
+            f"⚠ ALERTA\nTemperatura Baja\n{temperatura} °C\n{fecha}"
         )
 
     if humedad > 85:
@@ -277,6 +295,9 @@ def simular():
                 fecha=fecha
             )
         )
+       enviar_telegram(
+            f"⚠ ALERTA\nHumedad Alta\n{humedad}%\n{fecha}"
+        )
 
     if humedad < 60:
 
@@ -285,6 +306,9 @@ def simular():
                 tipo="Humedad Baja",
                 fecha=fecha
             )
+        )
+       enviar_telegram(
+            f"⚠ ALERTA\nHumedad Baja\n{humedad}%\n{fecha}"
         )
 
     db.session.commit()
@@ -439,6 +463,9 @@ def auto():
                     fecha=fecha
                 )
             )
+            enviar_telegram(
+                f"⚠ ALERTA\nTemperatura Alta\n{temperatura} °C\n{fecha}"
+            )
 
         if temperatura < 5:
             db.session.add(
@@ -446,6 +473,9 @@ def auto():
                     tipo="Temperatura Baja",
                     fecha=fecha
                 )
+            )
+            enviar_telegram(
+                f"⚠ ALERTA\nTemperatura Baja\n{temperatura} °C\n{fecha}"
             )
 
         if humedad > 85:
@@ -455,6 +485,9 @@ def auto():
                     fecha=fecha
                 )
             )
+            enviar_telegram(
+                f"⚠ ALERTA\nHumedad Alta\n{humedad}%\n{fecha}"
+            )
 
         if humedad < 60:
             db.session.add(
@@ -463,6 +496,10 @@ def auto():
                     fecha=fecha
                 )
             )
+            enviar_telegram(
+                f"⚠ ALERTA\nHumedad Baja\n{humedad}%\n{fecha}"
+            )
+            
 
     db.session.commit()
 
