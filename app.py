@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import random
+import requests
 from reportlab.platypus import (
     SimpleDocTemplate,
     Paragraph,
@@ -18,6 +19,9 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 
 db = SQLAlchemy(app)
+
+TOKEN = "8898420539:AAFbZBdmKeV-QGbqz4PnPrH6Wmud8QtgDgM"
+CHAT_ID = "8800367561"
 
 # ------------------------
 # TABLA DE REGISTROS
@@ -59,6 +63,26 @@ class Alerta(db.Model):
     fecha = db.Column(
         db.String(50)
     )
+def enviar_telegram(mensaje):
+
+    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
+
+    requests.post(
+        url,
+        data={
+            "chat_id": CHAT_ID,
+            "text": mensaje
+        }
+    )
+    
+@app.route("/telegram")
+def telegram():
+
+    enviar_telegram(
+        "✅ Prueba de Telegram desde Render"
+    )
+
+    return "Mensaje enviado"
 
 
 @app.route("/")
