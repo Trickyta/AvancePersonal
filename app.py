@@ -443,6 +443,71 @@ def reporte():
     <a href='/'>Volver al Dashboard</a>
     """
 
+@app.route("/auto", methods=["POST"])
+def auto():
+
+    import random
+
+    for i in range(20):
+
+        temperatura = round(
+            random.uniform(3, 20),
+            1
+        )
+
+        humedad = round(
+            random.uniform(50, 95),
+            1
+        )
+
+        fecha = datetime.now().strftime(
+            "%d/%m/%Y %H:%M:%S"
+        )
+
+        nuevo = Registro(
+            temperatura=temperatura,
+            humedad=humedad,
+            fecha=fecha
+        )
+
+        db.session.add(nuevo)
+
+        if temperatura > 15:
+            db.session.add(
+                Alerta(
+                    tipo="Temperatura Alta",
+                    fecha=fecha
+                )
+            )
+
+        if temperatura < 5:
+            db.session.add(
+                Alerta(
+                    tipo="Temperatura Baja",
+                    fecha=fecha
+                )
+            )
+
+        if humedad > 85:
+            db.session.add(
+                Alerta(
+                    tipo="Humedad Alta",
+                    fecha=fecha
+                )
+            )
+
+        if humedad < 60:
+            db.session.add(
+                Alerta(
+                    tipo="Humedad Baja",
+                    fecha=fecha
+                )
+            )
+
+    db.session.commit()
+
+    return redirect("/")
+
 with app.app_context():
     print("CREANDO TABLAS...")
     db.create_all()
