@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import random
 from reportlab.platypus import (
     SimpleDocTemplate,
     Paragraph,
@@ -212,6 +213,71 @@ def simular():
 
     humedad = float(
         request.form["humedad"]
+    )
+
+    fecha = datetime.now().strftime(
+        "%d/%m/%Y %H:%M:%S"
+    )
+
+    nuevo = Registro(
+        temperatura=temperatura,
+        humedad=humedad,
+        fecha=fecha
+    )
+
+    db.session.add(nuevo)
+
+    if temperatura > 15:
+
+        db.session.add(
+            Alerta(
+                tipo="Temperatura Alta",
+                fecha=fecha
+            )
+        )
+
+    if temperatura < 5:
+
+        db.session.add(
+            Alerta(
+                tipo="Temperatura Baja",
+                fecha=fecha
+            )
+        )
+
+    if humedad > 85:
+
+        db.session.add(
+            Alerta(
+                tipo="Humedad Alta",
+                fecha=fecha
+            )
+        )
+
+    if humedad < 60:
+
+        db.session.add(
+            Alerta(
+                tipo="Humedad Baja",
+                fecha=fecha
+            )
+        )
+
+    db.session.commit()
+
+    return redirect("/")
+
+@app.route("/auto")
+def auto():
+
+    temperatura = round(
+        random.uniform(3,20),
+        1
+    )
+
+    humedad = round(
+        random.uniform(50,95),
+        1
     )
 
     fecha = datetime.now().strftime(
